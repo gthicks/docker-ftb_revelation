@@ -2,8 +2,7 @@
 FROM openjdk:8-jre-alpine
 MAINTAINER Sean Nelson <audiohacked@gmail.com>
 
-ENV BASE_URL="http://ftb.cursecdn.com/FTB2/modpacks/FTBRevelation" \
-    FTB_VERSION="3_2_0" \
+ENV DOWNLOAD_URL="https://www.feed-the-beast.com/projects/ftb-revelation/files/2778975/download" \
     SERVER_FILE="FTBRevelationServer.zip" \
     SERVER_PORT=25565
 
@@ -17,7 +16,7 @@ RUN adduser -D minecraft && \
 
 USER minecraft
 RUN mkdir -p /minecraft/world && \
-    wget ${BASE_URL}/${FTB_VERSION}/${SERVER_FILE}  && \
+    wget -O ${SERVER_FILE} ${DOWNLOAD_URL}  && \
     unzip ${SERVER_FILE} && \
     chmod u+x FTBInstall.sh ServerStart.sh CheckEula.sh && \
     sed -i '2i /bin/sh /minecraft/CheckEula.sh' /minecraft/ServerStart.sh && \
